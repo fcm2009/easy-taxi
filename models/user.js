@@ -1,31 +1,34 @@
-const Waterline = require('waterline')
+const Schema = require('mongoose').Schema
 
 
-module.exports = Waterline.Collection.extend({
-	identity: 'user',
-	connection: 'default',
-	attributes: {
-        status: {
-            type: 'string',
-            enum: ['pending', 'approved'],
-            defaultTo: 'pending'
-        },
-		firstName: 'string',
-		lastName: 'string',
-        language: 'string',
-        adress: {
-            city: 'string',
-            country: 'string'
-        },
-        phone: {
-            countryCode: 'string',
-            number: 'string',
-            unique: 'true'
-        },
-        email: {
-            type: 'string',
-            unique: 'true'
-        },
-        password: 'string'
+module.exports = Schema({
+	status: {
+		type: String,
+		enum: ['pending', 'approved'],
+		default: 'pending'
+	},
+	firstName: String,
+	lastName: String,
+	language: String,
+	address: {
+		city: String,
+		country: String
+	},
+	phone: {
+		type: {
+			countryCode: String,
+			number: String
+		},
+		required: true,
+		unique: true
+	},
+	email: {
+		type: String,
+		unique: true,
+		required: true
+	},
+	password: {
+		type: String,
+		required: true
 	}
 })

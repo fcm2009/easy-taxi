@@ -1,15 +1,19 @@
 const express = require('express')
-const models = require('./models')
+const db = require('./config/database')
+const auth = require('./config/auth')
+const bodyParser = require('body-parser')
+const routes = require('./routes')
 
 
 const server = express()
 const port = 3000
 
 
-models.waterline.initialize(models.config, (err, ontology) => {
-    if(err) {
-        console.log(err)
-    } else {
-        server.listen(port, () => console.log(`Express Listening on Port ${port}`))
-    }
-})
+server.use([
+    bodyParser.json(),
+    auth.initialize()
+])
+
+server.use('/api', routes)
+
+server.listen(port, () => console.log(`Express Listening on Port ${port}`))

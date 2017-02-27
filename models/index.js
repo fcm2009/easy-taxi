@@ -1,22 +1,7 @@
-const Waterline = require('waterline')
-const sailsMongoAdapter = require('sails-mongo')
+const fs = require('fs')
+const mongoose = require('mongoose')
 const user = require('./user')
 
-
-const waterline = new Waterline()
-const config = {
-	adapters: {
-		'mongo': sailsMongoAdapter
-	},
-	connections: {
-		default: {
-			adapter: 'mongo'
-		}
-	}
+module.exports = {
+    User: mongoose.model('User', user)
 }
-
-
-waterline.loadCollection(user)
-
-
-module.exports = { waterline: waterline, config: config }
