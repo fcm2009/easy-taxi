@@ -1,7 +1,7 @@
 const Schema = require('mongoose').Schema
 
 
-module.exports = Schema({
+const userSchema = Schema({
 	status: {
 		type: String,
 		enum: ['pending', 'approved'],
@@ -19,7 +19,6 @@ module.exports = Schema({
 			countryCode: String,
 			number: String
 		},
-		required: true,
 		unique: true
 	},
 	email: {
@@ -32,3 +31,8 @@ module.exports = Schema({
 		required: true
 	}
 })
+
+userSchema.path('phone').validate(phone => phone.countryCode != null && phone.number != null)
+
+
+module.exports = userSchema
